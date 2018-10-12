@@ -1,0 +1,35 @@
+
+.sudoku-input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.sudoku-input:focus {
+  outline: none;
+}
+
+.default-value {
+  border: 1px solid #a9a9a9;
+}
+
+.sudoku-board td {
+  height:30px;
+  width:30px;
+  border:1px solid;
+  text-align:center;
+}
+.sudoku-board td:first-child {
+  border-left:solid;
+}
+.sudoku-board td:nth-child(3n) {
+  border-right:solid ;
+}
+.sudoku-board tr:first-child {
+  border-top:solid;
+}
+.sudoku-board tr:nth-child(3n) td {
+  border-bottom:solid ;
+}

@@ -31,13 +31,18 @@ export default class AppNavbar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Shopping List</NavbarBrand>
+            <NavbarBrand className="mx-auto" href="/">Sudoku</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <NavLink href="test">
-                    Test
+                    My Records
+                </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="test">
+                    Sign Out
                 </NavLink>
                 </NavItem>
               </Nav>
