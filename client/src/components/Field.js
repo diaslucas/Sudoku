@@ -17,7 +17,7 @@ export default class Field extends Component {
   }
 
   render() {
-    const index = this.props.ind;
+    // const index = this.props.ind;
     const { value } = this.state;
     let cssClass = '';
     if (value != '' && value != this.props.correctValue) {

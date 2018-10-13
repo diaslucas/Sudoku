@@ -11,8 +11,9 @@ export default class Home extends Component {
 
     this.state = {
       boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      fields: [],
-      boardResults: []
+      boards: []
+      // fields: [],
+      // boardResults: []
     };
   }
 
@@ -21,29 +22,33 @@ export default class Home extends Component {
       .get('/api/sudokus')
       .then(res => {
         this.setState({
-          fields: res.data[0].initialBoard,
-          boardResults: res.data[0].finalBoard
+          boards: res.data
         })
       })
   }
 
   render() {
-    const { boardRows, fields, boardResults } = this.state;
+    const { boardRows, boards } = this.state;
+    const cols = boards.map((board) => {
+      return (
+        <Col key={board._id}>
+          <a href={`/${board._id}`}>
+            <table className="sudoku-board">
+              <tbody>
+                {boardRows.map(boardRow => (
+                  <BoardRow key={boardRow} row={boardRow} fields={board.initialBoard} />
+                ))}
+              </tbody>
+            </table>
+          </a>
+        </Col>
+        )
+    });
     return (
       <div>
         <Container>
           <Row>
-            <Col>
-              <a href="/1">
-                <table className="sudoku-board">
-                  <tbody>
-                    {boardRows.map(boardRow => (
-                      <BoardRow key={boardRow} row={boardRow} fields={fields} />
-                    ))}
-                  </tbody>
-                </table>
-              </a>
-            </Col>
+            {cols}
           </Row>
         </Container>
       </div>

@@ -18,7 +18,6 @@ export default class BoardRow extends Component {
     });
     
     const boardResults = this.props.boardResults;
-    let x =1;
     return (
       <tr>
       {newFields.map((field, index) => {
