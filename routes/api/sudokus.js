@@ -11,6 +11,12 @@ router.get('/', (req, res) => {
   .then(sudokus => res.json(sudokus))
 });
 
+// @route GET api/sudokus/:id
+// @desc Get a sudoku
+router.get('/:id', (req, res) => {
+  Sudoku.findById(req.params.id)
+  .then(sudoku => res.json(sudoku))
+});
 
 // @route POST api/sudokus
 // @desc Add a sudoku

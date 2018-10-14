@@ -19,16 +19,16 @@ export default class BoardRow extends Component {
     
     const boardResults = this.props.boardResults;
     return (
-      <tr>
+      <tr key={`row_${row}`}>
       {newFields.map((field, index) => {
         if(boardResults){
           if(field !== 0){
-            return <td><div className="sudoku-input default-value" key={index}>{field}</div></td>
+            return <td key={`startField_${index}`}><div className="sudoku-input default-value">{field}</div></td>
           } else {
-              return <td><Field key={index} correctValue={this.props.boardResults[index]} ind={index} /></td>
+              return <td key={`field_${index}`}><Field correctValue={this.props.boardResults[index]} ind={index} /></td>
           }
         } else {
-          return <td key={index}>{(field == 0 ? '' : field)}</td>
+          return <td key={`startField_${index}`}>{(field == 0 ? '' : field)}</td>
         }
       })}
     </tr>

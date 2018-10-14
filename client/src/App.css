@@ -33,3 +33,6 @@
 .sudoku-board tr:nth-child(3n) td {
   border-bottom:solid ;
 }
+.HideTimer {
+  opacity: 0;
+}
