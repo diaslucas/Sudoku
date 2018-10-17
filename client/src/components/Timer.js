@@ -9,7 +9,7 @@ export default class Timer extends Component {
       timerVisible: true,
       secs: 0,
       mins: 0,
-      hours: 0,
+      hours: 0 ,
       startTime: Date.now()
     }
   }

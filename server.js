@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const sudokus = require('./routes/api/sudokus');
+const users = require('./routes/api/users');
+
 
 const app = express();
 
@@ -20,6 +22,7 @@ mongoose
 
 // Use Routes
 app.use('/api/sudokus', sudokus);
+app.use('/api/users', users);
 
 // PORT
 const port = process.env.PORT || 5000;
