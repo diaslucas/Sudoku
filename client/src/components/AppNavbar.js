@@ -9,6 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export default class AppNavbar extends Component {
 
@@ -31,7 +32,7 @@ export default class AppNavbar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand className="mx-auto" href="/">Sudoku</NavbarBrand>
+            <NavbarBrand className="mx-auto" tag={Link} to="/">Sudoku</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -43,7 +44,12 @@ export default class AppNavbar extends Component {
                 <NavItem>
                   <NavLink href="test">
                     Sign Out
-                </NavLink>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/CreateAccount">
+                    Create Account
+                  </NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
