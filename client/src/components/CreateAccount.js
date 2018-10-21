@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, FormGroup, Input, Label, Button, Alert } from 'reactstrap';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { createUser } from '../actions/UserActions';
+import { createUser  } from '../actions/UserActions';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 class CreateAccount extends Component {
 
@@ -13,7 +13,6 @@ class CreateAccount extends Component {
     this.state = {
       username: "",
       password: "",
-      alert: { visible: false, text: "Sorry! Something went wrong" }
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,33 +30,23 @@ class CreateAccount extends Component {
       password: this.state.password
     }
     this.props.createUser(newUser);
-    // axios
-    // .post('/api/users', newUser)
-    // .then(res => {
-    //   alert("User created");
-    // })
-    // .catch((err) => {
-    //   this.setState({
-    //     alert: { ...this.state.alert, visible: true }
-    //   });
-    //   console.log(this.state.alert);
-    //   if(err.response.status === 409){
-    //     this.setState({
-    //       alert: { ...this.state.alert, text: err.response.data.errors.username.message}
-    //     });
-    //   }
-      
-    // })
   }
 
   render() {
-    console.log(this.props.user);
-    const { alert } = this.props.user;
+    const { user } = this.props;
+    const { alert } = user;
+    if(user.userLoggedIn !== null) {
+      return <Redirect to='/' />
+    }
     return (
       <Container>
         {alert.visible &&
           <Alert color="danger">
-            {alert.message}
+            {alert.message.map((message, i) => {
+              return (
+                <span key={i}>{message} <br /></span>
+                )
+            })}
           </Alert>
         }
         <Row>
