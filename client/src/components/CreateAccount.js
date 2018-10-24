@@ -13,6 +13,7 @@ class CreateAccount extends Component {
     this.state = {
       username: "",
       password: "",
+      passwordConfirmation: ""
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,7 +28,8 @@ class CreateAccount extends Component {
     event.preventDefault();
     const newUser = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      passwordConfirmation: this.state.passwordConfirmation
     }
     this.props.createUser(newUser);
   }
@@ -61,6 +63,10 @@ class CreateAccount extends Component {
               <FormGroup>
                 <Label>Password</Label>
                 <Input type="password" name="password" onChange={this.handleChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Confirm Password</Label>
+                <Input type="password" name="passwordConfirmation" onChange={this.handleChange} />
               </FormGroup>
               <Button color="success">Create Account</Button>
             </Form>

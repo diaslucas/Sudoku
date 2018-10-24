@@ -30,7 +30,7 @@ export const createUser = user => dispatch => {
 };
 
 const isUserValid = (user, dispatch) => {
-  const { username, password } = user;
+  const { username, password, passwordConfirmation } = user;
   let alert = [];
   if (username === '') {
     alert.push("Username is required!");
@@ -44,6 +44,10 @@ const isUserValid = (user, dispatch) => {
   } else {
     if (password.length <= 4) {
       alert.push("Password is too short!");
+    } else {
+      if (password !== passwordConfirmation){
+        alert.push("Password doesn't match with confirmation!");
+      }
     }
   }
 

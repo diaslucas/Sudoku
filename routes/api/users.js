@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 // User Model
 const User = require('../../models/User');
 
@@ -18,19 +21,19 @@ router.get('/:id', (req, res) => {
   .then(user => res.json(user))
 });
 
+
 // @route POST api/users
 // @desc Add a user
 router.post('/', (req, res) => {
-  const newUser = new User({
-    username: req.body.username,
-    password: req.body.password
-  });
-
-  newUser
-  .save()
-  .then(user => res.json(user))
-  .catch(err => res.status(409).json(err));
-  
+  const hash = bcrypt.hashSync(req.body.password, saltRounds);
+    const newUser = new User({
+      username: req.body.username,
+      password: hash
+    });
+    newUser
+    .save()
+    .then(user => res.json(user))
+    .catch(err => res.status(409).json(err));
 });
 
 
