@@ -9,6 +9,7 @@ import CreateAccount from './components/CreateAccount';
 
 import { Provider } from 'react-redux';
 import store from './store';
+import Login from './components/Login';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/Sudoku/:id" component={Sudoku} />
             <Route path="/CreateAccount" component={CreateAccount} />
+            <Route path="/Login" component={Login} />
           </React.Fragment>
         </Router>
       </Provider>

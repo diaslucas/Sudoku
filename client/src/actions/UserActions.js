@@ -6,7 +6,7 @@ export const createUser = user => dispatch => {
     axios
       .post('/api/users', user)
       .then(res => {
-        storeUserID(res.data._id);
+        storeToken(res.data._id);
         dispatch({
           type: SET_USER_LOGGED_IN,
           payload: res.data._id
@@ -67,12 +67,12 @@ const isUserValid = (user, dispatch) => {
 
 }
 
-const storeUserID = (userID) => {
-  localStorage.setItem('userID', userID);
+const storeToken = (token) => {
+  localStorage.setItem('SudokuToken', token);
 }
 
 export const logOut = () => dispatch => {
-  localStorage.removeItem('userID');
+  localStorage.removeItem('SudokuToken');
   dispatch({
     type: LOGOUT
   });
