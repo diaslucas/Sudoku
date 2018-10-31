@@ -1,33 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BoardRow from './BoardRow';
-import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getSudokus } from '../actions/SudokuActions';
 
 
-export default class Home extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      boards: []
-    };
-  }
+class Home extends Component {
 
   componentWillMount() {
-    axios
-      .get('/api/sudokus')
-      .then(res => {
-        this.setState({
-          boards: res.data
-        })
-      })
+    this.props.getSudokus();
   }
 
   render() {
-    const { boardRows, boards } = this.state;
+    const { boardRows, boards } = this.props.sudoku;
     const cols = boards.map((board) => {
       return (
         <Col key={board._id}>
@@ -54,3 +41,13 @@ export default class Home extends Component {
   }
 }
 
+Home.propTypes = {
+  getSudokus: PropTypes.func,
+  sudoku: PropTypes.object
+}
+
+const mapStateToProps = (state) => ({
+  sudoku: state.sudoku,
+});
+
+export default connect(mapStateToProps, { getSudokus })(Home);
