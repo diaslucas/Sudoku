@@ -1,5 +1,5 @@
 import { CREATE_USER, SET_CREATE_USER_ALERT_MESSAGE, SET_CREATE_USER_ALERT_VISIBILITY, 
-  LOGIN, LOGOUT, SET_USER_LOGGED_IN } from '../actions/types';  
+  LOGOUT, SET_USER_LOGGED_IN, RESET_ALERT } from '../actions/types';  
 
 let userID = localStorage.getItem('userID');
 
@@ -36,6 +36,11 @@ export default function(state = initialState, action) {
       return {
         ...state, userLoggedIn: null
       }
+
+      case RESET_ALERT:
+        return {
+          ...state, alert: { message: ['Sorry! Something went wrong'], visible: false}
+        }
       
       default:
         return state;

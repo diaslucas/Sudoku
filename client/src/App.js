@@ -18,7 +18,6 @@ class App extends Component {
         <Router>
           <React.Fragment>
             <AppNavbar />
-
             <Route exact path="/" component={Home} />
             <Route path="/Sudoku/:id" component={Sudoku} />
             <Route path="/CreateAccount" component={CreateAccount} />

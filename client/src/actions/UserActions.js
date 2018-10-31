@@ -1,4 +1,4 @@
-import { SET_CREATE_USER_ALERT_MESSAGE, SET_CREATE_USER_ALERT_VISIBILITY, SET_USER_LOGGED_IN, LOGOUT } from './types';
+import { SET_CREATE_USER_ALERT_MESSAGE, SET_CREATE_USER_ALERT_VISIBILITY, SET_USER_LOGGED_IN, LOGOUT, RESET_ALERT } from './types';
 import axios from 'axios';
 
 export const createUser = user => dispatch => {
@@ -27,6 +27,39 @@ export const createUser = user => dispatch => {
         });
       })
   }
+};
+
+
+export const login = user => dispatch => {
+  axios
+    .post('/api/users/login', user)
+    .then(res => {
+      storeToken(res.data.token);
+      dispatch({
+        type: SET_USER_LOGGED_IN,
+        payload: res.data.token
+      });
+    })
+    .catch((err) => {
+      if (err.response.status === 500) {
+        let alert = [];
+        alert.push(err.response.data.message);
+        dispatch({
+          type: SET_CREATE_USER_ALERT_MESSAGE,
+          payload: alert
+        });
+      }
+      dispatch({
+        type: SET_CREATE_USER_ALERT_VISIBILITY,
+        payload: true
+      });
+    })
+};
+
+export const resetAlert = () => dispatch => {
+  dispatch({
+    type: RESET_ALERT
+  });
 };
 
 const isUserValid = (user, dispatch) => {

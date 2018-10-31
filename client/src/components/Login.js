@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, FormGroup, Input, Label, Button, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import { createUser  } from '../actions/UserActions';
+import { login, resetAlert  } from '../actions/UserActions';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
@@ -17,6 +17,10 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount(){
+    this.props.resetAlert();
   }
 
   handleChange(event) {
@@ -74,6 +78,7 @@ class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func,
+  resetAlert: PropTypes.func,
   user: PropTypes.object
 }
 
@@ -81,4 +86,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { createUser })(Login);
+export default connect(mapStateToProps, { login, resetAlert })(Login);
