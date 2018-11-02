@@ -9,3 +9,4 @@ export const RESET_ALERT = 'RESET_ALERT';
 
 // SUDOKU TYPES
 export const GET_SUDOKUS = 'GET_SUDOKUS';
+export const SET_CURRENT_SUDOKU = 'SET_CURRENT_SUDOKU';

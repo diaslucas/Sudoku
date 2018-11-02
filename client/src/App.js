@@ -19,7 +19,7 @@ class App extends Component {
           <React.Fragment>
             <AppNavbar />
             <Route exact path="/" component={Home} />
-            <Route path="/Sudoku/:id" component={Sudoku} />
+            <Route path="/Sudoku" component={Sudoku} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/Login" component={Login} />
           </React.Fragment>

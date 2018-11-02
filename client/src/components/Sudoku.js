@@ -1,37 +1,16 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
 import BoardRow from './BoardRow';
 import Timer from './Timer';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Sudoku extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      initialBoard: [],
-      finalBoard: [],
-      level: null
-    }
-  }
-
-  componentWillMount() {
-    const { id } = this.props.match.params;
-    axios
-      .get(`/api/sudokus/${id}`)
-      .then(res => {
-        this.setState({
-          initialBoard: res.data.initialBoard,
-          finalBoard: res.data.finalBoard,
-          level: res.data.level
-        })
-      })
-  }
-
+class Sudoku extends Component {
 
   render() {
-    const { boardRows, initialBoard, finalBoard } = this.state;
+    if(this.props.sudoku.currentSudoku != null){
+    const { boardRows, currentSudoku } = this.props.sudoku;
+    const { initialBoard, finalBoard } = currentSudoku;
     return (
       <Container>
         <Row>
@@ -51,5 +30,21 @@ export default class Sudoku extends Component {
         </Row>
       </Container>
     )
+    } else {
+      return (
+        <div></div>
+      )
+    }
   }
 }
+
+
+Sudoku.propTypes = {
+  sudoku: PropTypes.object
+}
+
+const mapStateToProps = (state) => ({
+  sudoku: state.sudoku,
+});
+
+export default connect(mapStateToProps)(Sudoku);
