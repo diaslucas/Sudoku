@@ -30,11 +30,15 @@ router.post('/login', (req, res, next) => {
     if (err) {
       res.status(500).json({success: false, message: errorMessage});
     } else {
-      let passwordMatch = bcrypt.compareSync(req.body.password, user.password);
-      if(passwordMatch){
-        res.json({success: true, token: user._id});
+      if (user !== null){
+        let passwordMatch = bcrypt.compareSync(req.body.password, user.password);
+        if(passwordMatch){
+          res.json({success: true, token: user._id});
+        } else {
+          res.status(500).json({success: false, message: errorMessage})
+        }
       } else {
-        res.status(500).json({success: false, message: errorMessage})
+        res.status(500).json({success: false, message: errorMessage});
       }
     }
   })

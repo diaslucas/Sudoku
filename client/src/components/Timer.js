@@ -9,7 +9,7 @@ export default class Timer extends Component {
       timerVisible: true,
       secs: 0,
       mins: 0,
-      hours: 0 ,
+      hours: 0,
       startTime: Date.now()
     }
   }
@@ -50,7 +50,13 @@ export default class Timer extends Component {
     return (
       <React.Fragment>
         <div className={!timerVisible ? 'HideTimer' : ''}>
-          <h4>{hours}:{mins}:{secs}</h4>
+          <h4>
+            {hours > 0 && (
+              <span>{hours}:</span>
+            )}
+            {(mins.toString().length > 1 ? <span>{mins}:</span> : <span>0{mins}:</span>)}
+            {(secs.toString().length > 1 ? <span>{secs}</span> : <span>0{secs}</span>)}
+          </h4>
           <div>
             Too much pressure ? <br />
           </div>

@@ -6,10 +6,14 @@ import './App.css';
 import Home from './components/Home';
 import Sudoku from './components/Sudoku';
 import CreateAccount from './components/CreateAccount';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { Provider } from 'react-redux';
 import store from './store';
 import Login from './components/Login';
+
+library.add(faStar);
 
 class App extends Component {
   render() {
