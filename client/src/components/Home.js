@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getSudokus, setCurrentSudoku } from '../actions/SudokuActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Level from './Level';
 
 
 class Home extends Component {
@@ -18,31 +18,24 @@ class Home extends Component {
     this.props.history.push('/sudoku');
   }
 
-  stars = (level) => {
-    let arrLevels = Array(level).fill(0);
-    return arrLevels.map((level, index) => {
-      return <FontAwesomeIcon icon="star" size="lg" key={index} />;
-    });
-  }
-
   render() {
     const { boardRows, boards } = this.props.sudoku;
     const cols = boards.map((board) => {
       return (
         <Col key={board._id} md="4">
-        <div onClick={() => this.goToSudoku(board._id)}>
-          <table className="sudoku-board view-mode-board">
-            <tbody>
-              {boardRows.map(boardRow => (
-                <BoardRow key={boardRow} row={boardRow} fields={board.initialBoard} />
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="stars-container">
-          {this.stars(board.level)}
-        </div>
-      </Col>
+          <div style={{ width: '274px' }}>
+            <div onClick={() => this.goToSudoku(board._id)}>
+              <table className="sudoku-board view-mode-board">
+                <tbody>
+                  {boardRows.map(boardRow => (
+                    <BoardRow key={boardRow} row={boardRow} fields={board.initialBoard} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Level value={board.level} />
+          </div>
+        </Col>
       )
     });
     return (

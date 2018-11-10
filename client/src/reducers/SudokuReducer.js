@@ -28,8 +28,8 @@ export default function (state = initialState, action) {
       return {
         ...state, 
         boardState: state.boardState.map((field, index) => {
-          if (index === action.fieldIndex) {
-            return action.fieldValue;
+          if (index === action.payload.fieldIndex) {
+            return action.payload.fieldValue;
           }
           return field;
         })

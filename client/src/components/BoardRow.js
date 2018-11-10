@@ -28,7 +28,7 @@ export default class BoardRow extends Component {
               return <td key={`field_${index}`}><Field correctValue={boardResults[index]} fieldIndex={index} /></td>
           }
         } else {
-          return <td key={`startField_${index}`}>{(field == 0 ? '' : field)}</td>
+          return <td key={`startField_${index}`}>{(field === 0 ? '' : field)}</td>
         }
       })}
     </tr>

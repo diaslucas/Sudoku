@@ -26,7 +26,7 @@ class Field extends Component {
   render() {
     const { value } = this.state;
     let cssClass = '';
-    if (value != '' && value != this.props.correctValue) {
+    if (value !== '' && parseInt(value) !== this.props.correctValue) {
       cssClass = 'border border-danger';
     }
     return (
