@@ -1,6 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setBoardState } from '../actions/SudokuActions';
 
-export default class Field extends Component {
+class Field extends Component {
 
   constructor(props) {
     super(props)
@@ -13,11 +16,14 @@ export default class Field extends Component {
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    const value = event.target.value;
+    if(!isNaN(value)){
+      this.setState({value});
+      this.props.setBoardState(this.props.fieldIndex, parseInt(value));
+    }
   }
 
   render() {
-    // const index = this.props.ind;
     const { value } = this.state;
     let cssClass = '';
     if (value != '' && value != this.props.correctValue) {
@@ -28,3 +34,15 @@ export default class Field extends Component {
     )
   }
 }
+
+
+Field.propTypes = {
+  sudoku: PropTypes.object,
+  setBoardState: PropTypes.func
+}
+
+const mapStateToProps = (state) => ({
+  sudoku: state.sudoku
+});
+
+export default connect(mapStateToProps, { setBoardState })(Field);

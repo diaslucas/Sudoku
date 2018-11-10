@@ -18,7 +18,6 @@ class Home extends Component {
     this.props.history.push('/sudoku');
   }
 
-
   stars = (level) => {
     let arrLevels = Array(level).fill(0);
     return arrLevels.map((level, index) => {

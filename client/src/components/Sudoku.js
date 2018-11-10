@@ -4,11 +4,12 @@ import BoardRow from './BoardRow';
 import Timer from './Timer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { resetBoardState } from '../actions/SudokuActions';
 
 class Sudoku extends Component {
 
   render() {
-    if(this.props.sudoku.currentSudoku != null){
+    if(this.props.sudoku.currentSudoku != null) {
     const { boardRows, currentSudoku } = this.props.sudoku;
     const { initialBoard, finalBoard } = currentSudoku;
     return (
@@ -40,11 +41,12 @@ class Sudoku extends Component {
 
 
 Sudoku.propTypes = {
-  sudoku: PropTypes.object
+  sudoku: PropTypes.object,
+  resetBoardState: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  sudoku: state.sudoku,
+  sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps)(Sudoku);
+export default connect(mapStateToProps, { resetBoardState })(Sudoku);

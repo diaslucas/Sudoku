@@ -25,7 +25,7 @@ export default class BoardRow extends Component {
           if(field !== 0){
             return <td key={`startField_${index}`}><div className="sudoku-input default-value">{field}</div></td>
           } else {
-              return <td key={`field_${index}`}><Field correctValue={this.props.boardResults[index]} ind={index} /></td>
+              return <td key={`field_${index}`}><Field correctValue={boardResults[index]} fieldIndex={index} /></td>
           }
         } else {
           return <td key={`startField_${index}`}>{(field == 0 ? '' : field)}</td>
