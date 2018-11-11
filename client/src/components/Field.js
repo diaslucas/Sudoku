@@ -7,6 +7,8 @@ class Field extends Component {
 
   constructor(props) {
     super(props)
+  
+    this.fieldRef = React.createRef();
 
     this.state = {
       value: ''
@@ -18,8 +20,20 @@ class Field extends Component {
   handleChange(event) {
     const value = event.target.value;
     if(!isNaN(value)){
+      if (value !== '' && parseInt(value) === this.props.correctValue) {
+        const nextTd = this.fieldRef.current.parentElement.nextSibling;
+        this.focusNextField(nextTd);
+      }
       this.setState({value});
       this.props.setBoardState(this.props.fieldIndex, parseInt(value));
+    }
+  }
+
+  focusNextField(nextTd) {
+    if(nextTd.firstChild.tagName === 'INPUT'){
+      nextTd.firstChild.focus();
+    } else {
+      this.focusNextField(nextTd.nextSibling);
     }
   }
 
@@ -30,7 +44,8 @@ class Field extends Component {
       cssClass = 'border border-danger';
     }
     return (
-      <input type="text" value={this.state.value} className={"sudoku-input " + cssClass} maxLength="1" onChange={this.handleChange} />
+      <input type="text" value={this.state.value} className={"sudoku-input " + cssClass} 
+      maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     )
   }
 }

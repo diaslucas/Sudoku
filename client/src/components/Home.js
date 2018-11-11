@@ -9,7 +9,7 @@ import Level from './Level';
 
 class Home extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getSudokus();
   }
 
@@ -28,7 +28,7 @@ class Home extends Component {
               <table className="sudoku-board view-mode-board">
                 <tbody>
                   {boardRows.map(boardRow => (
-                    <BoardRow key={boardRow} row={boardRow} fields={board.initialBoard} />
+                    <BoardRow key={boardRow} row={boardRow} fields={board.initialBoard}/>
                   ))}
                 </tbody>
               </table>

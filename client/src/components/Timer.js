@@ -1,43 +1,13 @@
 import React, { Component } from 'react'
 
-export default class Timer extends Component {
+class Timer extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      timerVisible: true,
-      secs: 0,
-      mins: 0,
-      hours: 0,
-      startTime: Date.now()
+      timerVisible: true
     }
-  }
-
-  componentDidMount() {
-    setInterval(this.tick.bind(this), 1000);
-  }
-
-  tick() {
-    const { secs, mins, hours } = this.state;
-    let newSecs = secs + 1;
-    let newMins = mins;
-    let newHours = hours;
-    if (newSecs === 60) {
-      newSecs = 0;
-      newMins = mins + 1;
-      if (newMins === 60) {
-        newSecs = 0;
-        newMins = 0;
-        newHours = hours + 1;
-      }
-    }
-
-    this.setState({
-      secs: newSecs,
-      mins: newMins,
-      hours: newHours
-    });
   }
 
   toggleTimer = () => {
@@ -45,7 +15,8 @@ export default class Timer extends Component {
   }
 
   render() {
-    const { timerVisible, secs, mins, hours } = this.state;
+    const { timerVisible } = this.state;
+    const { secs, mins, hours } = this.props;
     const btnHideTimerText = (timerVisible ? 'Hide Timer' : 'Show Timer')
     return (
       <React.Fragment>
@@ -66,3 +37,6 @@ export default class Timer extends Component {
     )
   }
 }
+
+
+export default Timer;
