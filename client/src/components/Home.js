@@ -13,8 +13,9 @@ class Home extends Component {
     this.props.getSudokus();
   }
 
-  goToSudoku = (boardID) => {
-    this.props.setCurrentSudoku(boardID);
+  goToSudoku = (board) => {
+    //console.log(board);
+    this.props.setCurrentSudoku(board);
     this.props.history.push('/sudoku');
   }
 
@@ -24,7 +25,7 @@ class Home extends Component {
       return (
         <Col key={board._id} md="4">
           <div style={{ width: '274px' }}>
-            <div onClick={() => this.goToSudoku(board._id)}>
+            <div onClick={() => this.goToSudoku(board)}>
               <table className="sudoku-board view-mode-board">
                 <tbody>
                   {boardRows.map(boardRow => (

@@ -7,7 +7,7 @@ class Field extends Component {
 
   constructor(props) {
     super(props)
-  
+
     this.fieldRef = React.createRef();
 
     this.state = {
@@ -19,21 +19,35 @@ class Field extends Component {
 
   handleChange(event) {
     const value = event.target.value;
-    if(!isNaN(value)){
+    if (!isNaN(value)) {
       if (value !== '' && parseInt(value) === this.props.correctValue) {
-        const nextTd = this.fieldRef.current.parentElement.nextSibling;
-        this.focusNextField(nextTd);
+        const currentTd = this.fieldRef.current.parentElement;
+        this.focusNextField(currentTd);
       }
-      this.setState({value});
+      this.setState({ value });
       this.props.setBoardState(this.props.fieldIndex, parseInt(value));
     }
   }
 
-  focusNextField(nextTd) {
-    if(nextTd.firstChild.tagName === 'INPUT'){
-      nextTd.firstChild.focus();
+  focusNextField(currentTd) {
+    let nextTd = currentTd.nextSibling;
+    if(nextTd !== null){
+      if(nextTd.firstChild.tagName === 'INPUT'){
+        nextTd.firstChild.focus();
+      } else {
+        this.focusNextField(nextTd);
+      }
     } else {
-      this.focusNextField(nextTd.nextSibling);
+      let currentTr = currentTd.parentElement;
+      if (currentTr.nextSibling !== null) {
+        
+        let input = currentTr.nextSibling.firstChild.firstChild;
+        if (input.tagName === 'INPUT') {
+          currentTr.nextSibling.firstChild.firstChild.focus();
+        } else {
+          this.focusNextField(currentTr.nextSibling.firstChild);
+        }
+      }
     }
   }
 
@@ -44,8 +58,8 @@ class Field extends Component {
       cssClass = 'border border-danger';
     }
     return (
-      <input type="text" value={this.state.value} className={"sudoku-input " + cssClass} 
-      maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
+      <input type="text" value={this.state.value} className={"sudoku-input " + cssClass}
+        maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     )
   }
 }

@@ -1,4 +1,4 @@
-import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_BOARD_STATE, SET_BOARD_STATE_TO_INITIAL_BOARD } from './types';
+import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD } from './types';
 import axios from 'axios';
 
 export const getSudokus = () => dispatch => {
@@ -12,17 +12,14 @@ export const getSudokus = () => dispatch => {
   })
 }
 
-export const setCurrentSudoku = sudokuID => dispatch => {
-  axios
-  .get(`/api/sudokus/${sudokuID}`)
-  .then(res => {
-    dispatch({
-      type: SET_CURRENT_SUDOKU,
-      payload: res.data
-    });
-    const {initialBoard} = res.data;
-    setBoardStateToInitialBoard(initialBoard, dispatch);
-  })
+export const setCurrentSudoku = sudoku => dispatch => {
+  dispatch({
+    type: SET_CURRENT_SUDOKU,
+    payload: sudoku
+  });
+
+  const {initialBoard} = sudoku;
+  setBoardStateToInitialBoard(initialBoard, dispatch);
 }
 
 
@@ -40,8 +37,8 @@ export const setBoardState = (fieldIndex, fieldValue) => dispatch => {
   });
 }
 
-export const resetBoardState = () => dispatch => {
+export const resetCurrentSudoku = () => dispatch => {
   dispatch({
-    type: RESET_BOARD_STATE
+    type: RESET_CURRENT_SUDOKU
   });
 }

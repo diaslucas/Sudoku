@@ -1,4 +1,4 @@
-import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_BOARD_STATE, SET_BOARD_STATE_TO_INITIAL_BOARD } from '../actions/types';
+import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD } from '../actions/types';
 
 const initialState = {
   boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -35,9 +35,9 @@ export default function (state = initialState, action) {
         })
       };
 
-    case RESET_BOARD_STATE:
+    case RESET_CURRENT_SUDOKU:
       return {
-        ...state, boardState: []
+        ...state, currentSudoku: null
       };
 
     default:

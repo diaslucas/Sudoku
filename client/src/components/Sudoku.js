@@ -4,7 +4,7 @@ import BoardRow from './BoardRow';
 import Timer from './Timer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { resetBoardState } from '../actions/SudokuActions';
+import { resetCurrentSudoku } from '../actions/SudokuActions';
 import Level from './Level';
 import WinnersModal from './WinnersModal';
 
@@ -97,11 +97,11 @@ class Sudoku extends Component {
 
 Sudoku.propTypes = {
   sudoku: PropTypes.object,
-  resetBoardState: PropTypes.func
+  resetCurrentSudoku: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps, { resetBoardState })(Sudoku);
+export default connect(mapStateToProps, { resetCurrentSudoku })(Sudoku);
