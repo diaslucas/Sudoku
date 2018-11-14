@@ -48,15 +48,40 @@ router.post('/login', (req, res, next) => {
 // @route POST api/users
 // @desc Add a user
 router.post('/', (req, res) => {
-  const hash = bcrypt.hashSync(req.body.password, saltRounds);
-    const newUser = new User({
-      username: req.body.username,
-      password: hash
-    });
-    newUser
-    .save()
-    .then(user => res.json(user))
-    .catch(err => res.status(409).json(err));
+  const { username, password, passwordConfirmation } = req.body;
+  let alert = [];
+  if (username === '') {
+    alert.push("Username is required!");
+  } else {
+    if (username.length <= 4) {
+      alert.push("Username is too short!");
+    }
+  }
+  if (password === '') {
+    alert.push("Password is required!");
+  } else {
+    if (password.length <= 4) {
+      alert.push("Password is too short!");
+    } else {
+      if (password !== passwordConfirmation){
+        alert.push("Password doesn't match with confirmation!");
+      }
+    }
+  }
+  
+  if (alert.length > 0) {
+    res.json({success: false, message: alert});    
+  } else {
+    const hash = bcrypt.hashSync(req.body.password, saltRounds);
+      const newUser = new User({
+        username: req.body.username,
+        password: hash
+      });
+      newUser
+      .save()
+      .then(user => res.json({ success: true, user }))
+      .catch(err => res.status(409).json({ success: false, err }));
+  }
 });
 
 
