@@ -1,4 +1,5 @@
-import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD } from './types';
+import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD,
+  ADD_ERROR } from './types';
 import axios from 'axios';
 
 export const getSudokus = () => dispatch => {
@@ -40,5 +41,11 @@ export const setBoardState = (fieldIndex, fieldValue) => dispatch => {
 export const resetCurrentSudoku = () => dispatch => {
   dispatch({
     type: RESET_CURRENT_SUDOKU
+  });
+}
+
+export const addError = () => dispatch => {
+  dispatch({
+    type: ADD_ERROR
   });
 }

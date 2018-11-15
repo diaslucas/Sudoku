@@ -50,7 +50,14 @@
   margin-top: 10px;
   color: #6161f9;
 }
-.winners-modal-detail{
+.winners-modal-detail {
   color: #6161f9;
   font-weight: bold;
+}
+.sudoku-errors {
+  margin-bottom: 10px;
+}
+.sudoku-errors span {
+  font-weight: bold;
+  color: red;
 }

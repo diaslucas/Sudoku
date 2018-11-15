@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setBoardState } from '../actions/SudokuActions';
+import { setBoardState, addError } from '../actions/SudokuActions';
 
 class Field extends Component {
 
@@ -11,7 +11,8 @@ class Field extends Component {
     this.fieldRef = React.createRef();
 
     this.state = {
-      value: ''
+      value: '',
+      cssClass: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,9 +21,16 @@ class Field extends Component {
   handleChange(event) {
     const value = event.target.value;
     if (!isNaN(value)) {
-      if (value !== '' && parseInt(value) === this.props.correctValue) {
-        const currentTd = this.fieldRef.current.parentElement;
-        this.focusNextField(currentTd);
+      if (value !== '') {
+        if (parseInt(value) === this.props.correctValue) {
+          const currentTd = this.fieldRef.current.parentElement;
+          this.focusNextField(currentTd);
+        } else {
+          this.props.addError();
+          this.setState({ cssClass: 'border border-danger' });
+        }
+      } else{
+        this.setState({ cssClass: '' });
       }
       this.setState({ value });
       this.props.setBoardState(this.props.fieldIndex, parseInt(value));
@@ -52,13 +60,13 @@ class Field extends Component {
   }
 
   render() {
-    const { value } = this.state;
-    let cssClass = '';
-    if (value !== '' && parseInt(value) !== this.props.correctValue) {
-      cssClass = 'border border-danger';
-    }
+    const { value, cssClass } = this.state;
+    // let cssClass = '';
+    // if (value !== '' && parseInt(value) !== this.props.correctValue) {
+    //   cssClass = 'border border-danger';
+    // }
     return (
-      <input type="text" value={this.state.value} className={"sudoku-input " + cssClass}
+      <input type="text" value={value} className={"sudoku-input " + cssClass}
         maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     )
   }
@@ -67,11 +75,12 @@ class Field extends Component {
 
 Field.propTypes = {
   sudoku: PropTypes.object,
-  setBoardState: PropTypes.func
+  setBoardState: PropTypes.func,
+  addError: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps, { setBoardState })(Field);
+export default connect(mapStateToProps, { setBoardState, addError })(Field);

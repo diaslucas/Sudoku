@@ -50,10 +50,17 @@ class Sudoku extends Component {
     });
   }
 
+  Errors = (props) => {
+    if(props.value === 0){
+      return false;
+    }
+    return <div className="sudoku-errors">Errors: <span>{props.value}</span></div>;
+  }
+
   render() {
     if (this.props.sudoku.currentSudoku != null) {
       const { secs, mins, hours } = this.state;
-      const { boardRows, currentSudoku, boardState } = this.props.sudoku;
+      const { boardRows, currentSudoku, boardState, errors } = this.props.sudoku;
       const { initialBoard, finalBoard, level } = currentSudoku;
       const time = {secs, mins, hours};
       let isSudokuComplete = false;
@@ -67,7 +74,7 @@ class Sudoku extends Component {
             <Col md="3"></Col>
             <Col md="6">
               {isSudokuComplete &&
-                 <WinnersModal time={time} /> 
+                 <WinnersModal time={time} errors={errors}/> 
               }
               <div style={{ width: '486px' }}>
                 <table className="sudoku-board">
@@ -81,6 +88,7 @@ class Sudoku extends Component {
               </div>
             </Col>
             <Col md="3">
+              <this.Errors value={this.props.sudoku.errors} />
               <Timer secs={secs} mins={mins} hours={hours} />
             </Col>
           </Row>
