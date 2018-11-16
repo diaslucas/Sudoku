@@ -18,6 +18,9 @@ const SudokuSchema = new Schema({
   insertDate: {
     type: Date,
     default: Date.now
+  },
+  records: {
+    type: Array
   }
 });
 
