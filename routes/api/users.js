@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
 });
 
 
-// @route GET api/users/login
+// @route POST api/users/login
 // @desc Get a token if username and password match
 router.post('/login', (req, res, next) => {
   User.findOne({ username: req.body.username }, (err, user) => {
@@ -33,7 +33,7 @@ router.post('/login', (req, res, next) => {
       if (user !== null){
         let passwordMatch = bcrypt.compareSync(req.body.password, user.password);
         if(passwordMatch){
-          res.json({success: true, token: user._id});
+          res.json({success: true, token: user._id, username: user.username});
         } else {
           res.status(500).json({success: false, message: errorMessage})
         }

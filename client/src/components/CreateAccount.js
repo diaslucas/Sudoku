@@ -41,7 +41,7 @@ class CreateAccount extends Component {
   render() {
     const { user } = this.props;
     const { alert } = user;
-    if(user.userLoggedIn !== null) {
+    if(user.userLoggedIn.token !== null) {
       return <Redirect to='/' />
     }
     return (

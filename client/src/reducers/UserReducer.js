@@ -3,13 +3,14 @@ import {
   LOGOUT, SET_USER_LOGGED_IN, RESET_ALERT
 } from '../actions/types';
 
-let userID = localStorage.getItem('userID');
+let token = localStorage.getItem('SudokuToken');
+let username = localStorage.getItem('SudokuUsername');
 
 const initialState = {
   username: '',
   password: '',
   alert: { message: ['Sorry! Something went wrong'], visible: false },
-  userLoggedIn: userID
+  userLoggedIn: {token, username}
 }
 
 export default function (state = initialState, action) {
@@ -31,12 +32,12 @@ export default function (state = initialState, action) {
 
     case SET_USER_LOGGED_IN:
       return {
-        ...state, userLoggedIn: action.payload
+        ...state, userLoggedIn: {token: action.payload.token, username: action.payload.username} 
       };
 
     case LOGOUT:
       return {
-        ...state, userLoggedIn: null
+        ...state,  userLoggedIn: {token: null, username: null} 
       };
 
     case RESET_ALERT:

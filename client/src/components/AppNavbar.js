@@ -31,7 +31,7 @@ class AppNavbar extends Component {
   }
 
   render() {
-    const isUserLoggedIn = this.props.user.userLoggedIn !== null ? true : false;
+    const isUserLoggedIn = this.props.user.userLoggedIn.token !== null ? true : false;
     return (
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
