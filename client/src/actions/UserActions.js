@@ -23,8 +23,7 @@ export const createUser = user => dispatch => {
     }
   })
   .catch(err => {
-    alert('Sorry! Something went wrong');
-    console.log(err);
+    console.log(err.message);
   })
 };
 

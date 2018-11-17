@@ -80,7 +80,14 @@ router.post('/', (req, res) => {
       newUser
       .save()
       .then(user => res.json({ success: true, user }))
-      .catch(err => res.status(409).json({ success: false, err }));
+      .catch(err => {
+        if(err.code === 11000){ //duplicate record
+          alert.push('The username already exists!')
+          res.json({success: false, message: alert});    
+        } else {
+          res.json({success: false, message: ['Sorry! Something went wrong']});
+        }
+      })
   }
 });
 
