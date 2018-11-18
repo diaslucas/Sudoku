@@ -24,8 +24,11 @@
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
+    "connect-mongodb-session": "^2.0.5",
     "express": "^4.16.3",
-    "mongoose": "^5.3.2"
+    "express-session": "^1.15.6",
+    "mongoose": "^5.3.2",
+    "passport": "^0.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"

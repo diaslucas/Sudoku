@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const passport = require('passport');
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -79,7 +81,11 @@ router.post('/', (req, res) => {
       });
       newUser
       .save()
-      .then(user => res.json({ success: true, user }))
+      .then(user => {
+        req.login(user._id, function(err) {
+          res.json({ success: true, user });
+        });
+      })
       .catch(err => {
         if(err.code === 11000){ //duplicate record
           alert.push('The username already exists!')
@@ -89,6 +95,16 @@ router.post('/', (req, res) => {
         }
       })
   }
+});
+
+passport.serializeUser(function(userID, done) {
+  done(null, userID);
+});
+
+passport.deserializeUser(function(userID, done) {
+  User.findById(userID, function (err, user) {
+    done(err, user._id);
+  });
 });
 
 

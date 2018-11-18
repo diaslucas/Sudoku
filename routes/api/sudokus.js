@@ -8,7 +8,11 @@ const Sudoku = require('../../models/Sudoku');
 // @desc Get all sudokus
 router.get('/', (req, res) => {
   Sudoku.find()
-  .then(sudokus => res.json(sudokus))
+  .then(sudokus => {
+    console.log(req.isAuthenticated());
+    console.log(req.user);
+    res.json(sudokus)
+  })
 });
 
 // @route GET api/sudokus/:id
