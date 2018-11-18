@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logOut  } from '../actions/UserActions';
+import { logOut, isUserLoggedIn  } from '../actions/UserActions';
 
 class AppNavbar extends Component {
 
@@ -30,8 +30,12 @@ class AppNavbar extends Component {
     });
   }
 
+  componentDidMount(){
+    this.props.isUserLoggedIn();
+  }
+
   render() {
-    const isUserLoggedIn = this.props.user.userLoggedIn.token !== null ? true : false;
+    const isUserLoggedIn = this.props.user.userLoggedIn !== null ? true : false;
     return (
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
@@ -78,6 +82,7 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
   logOut: PropTypes.func,
+  isUserLoggedIn: PropTypes.func,
   user: PropTypes.object
 }
 
@@ -85,4 +90,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { logOut })(AppNavbar);
+export default connect(mapStateToProps, { logOut, isUserLoggedIn })(AppNavbar);

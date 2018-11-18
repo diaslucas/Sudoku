@@ -7,31 +7,12 @@ const UserSchema = new Schema({
     type: String,
     require: true,
     unique: true
-//     validate: {
-//       isAsync: true,
-//       validator: function(value, isValid) {
-//           const self = this;
-//           return self.constructor.findOne({ username: value })
-//           .exec(function(err, user){
-//               if(err){
-//                   throw err;
-//               }
-//               else if(user) {
-//                   if(self.id === user.id) { 
-//                       return isValid(true);
-//                   }
-//                   return isValid(false);  
-//               }
-//               else {
-//                   return isValid(true);
-//               }
-
-//           })
-//       },
-//       message:  'The username already exists!'
-//   },
   },
   password: {
+    type: String,
+    required: true
+  },
+  role: {
     type: String,
     required: true
   },

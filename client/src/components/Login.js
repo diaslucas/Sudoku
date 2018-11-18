@@ -39,7 +39,7 @@ class Login extends Component {
   render() {
     const { user } = this.props;
     const { alert } = user;
-    if(user.userLoggedIn.token !== null) {
+    if(user.userLoggedIn !== null) {
       return <Redirect to='/' />
     }
     return (

@@ -6,10 +6,9 @@ export const createUser = user => dispatch => {
   .post('/api/users', user)
   .then(res => {
     if(res.data.success){
-      storeToken(res.data._id);
       dispatch({
         type: SET_USER_LOGGED_IN,
-        payload: res.data._id
+        payload: res.data.user
       });
     } else {
       dispatch({
@@ -32,11 +31,9 @@ export const login = user => dispatch => {
   axios
     .post('/api/users/login', user)
     .then(res => {
-      storeToken(res.data.token);
-      storeUsername(res.data.username);
       dispatch({
         type: SET_USER_LOGGED_IN,
-        payload: {token: res.data.token, username: res.data.username}
+        payload: res.data.user
       });
     })
     .catch((err) => {
@@ -55,23 +52,34 @@ export const login = user => dispatch => {
     })
 };
 
+
+export const isUserLoggedIn = () => dispatch => {
+  axios
+  .post('/api/users/userLoggedIn')
+  .then(res => {
+    if(res.data.success){
+      dispatch({
+        type: SET_USER_LOGGED_IN,
+        payload: res.data.user
+      });
+    }
+  })
+}
+
 export const resetAlert = () => dispatch => {
   dispatch({
     type: RESET_ALERT
   });
 };
 
-const storeToken = (token) => {
-  localStorage.setItem('SudokuToken', token);
-}
-
-const storeUsername = (username) => {
-  localStorage.setItem('SudokuUsername', username);
-}
-
 export const logOut = () => dispatch => {
-  localStorage.removeItem('SudokuToken');
-  dispatch({
-    type: LOGOUT
-  });
+  axios
+  .post('/api/users/logout')
+  .then(res => {
+    if(res.data.success){
+      dispatch({
+        type: LOGOUT
+      });
+    }
+  })
 }
