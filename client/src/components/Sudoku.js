@@ -4,9 +4,10 @@ import BoardRow from './BoardRow';
 import Timer from './Timer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { resetCurrentSudoku } from '../actions/SudokuActions';
 import Level from './Level';
 import WinnersModal from './WinnersModal';
+import axios from 'axios';
+import Records from './Records';
 
 class Sudoku extends Component {
 
@@ -51,40 +52,50 @@ class Sudoku extends Component {
   }
 
   Errors = (props) => {
-    if(props.value === 0){
+    if (props.value === 0) {
       return false;
     }
     return <div className="sudoku-errors">Errors: <span>{props.value}</span></div>;
+  }
+
+  addRecord = (sudokuRecord) => {
+    axios
+      .put(`/api/sudokus/${sudokuRecord._id}`, sudokuRecord.record);
   }
 
   render() {
     if (this.props.sudoku.currentSudoku != null) {
       const { secs, mins, hours } = this.state;
       const { boardRows, currentSudoku, boardState, errors } = this.props.sudoku;
-      const { initialBoard, finalBoard, level } = currentSudoku;
-      const time = {secs, mins, hours};
+      const { _id, initialBoard, finalBoard, level, records } = currentSudoku;
+      const time = { secs, mins, hours };
       let isSudokuComplete = false;
       if (boardState.toString() === finalBoard.toString()) {
         clearInterval(this.timer);
         isSudokuComplete = true;
+        const record = { hours, mins, secs, errors };
+        const sudokuRecord = { _id, record };
+        this.addRecord(sudokuRecord);
       }
       return (
         <Container>
           <Row>
-            <Col md="3"></Col>
+            <Col md="3">
+              <Records value={records}/>
+            </Col>
             <Col md="6">
               {isSudokuComplete &&
-                 <WinnersModal time={time} errors={errors}/> 
+                <WinnersModal time={time} errors={errors} />
               }
-              <div style={{ width: '486px' }}>
+              <div style={{ width: '486px', margin: '0 auto' }}>
                 <table className="sudoku-board">
                   <tbody>
                     {boardRows.map(boardRow => (
-                      <BoardRow key={`boardRow_${boardRow}`} row={boardRow} fields={initialBoard} boardResults={finalBoard}/>
-                      ))}
+                      <BoardRow key={`boardRow_${boardRow}`} row={boardRow} fields={initialBoard} boardResults={finalBoard} />
+                    ))}
                   </tbody>
                 </table>
-                <Level value={level} size='2x' marginTop='30px'/>
+                <Level value={level} size='2x' marginTop='30px' />
               </div>
             </Col>
             <Col md="3">
@@ -104,12 +115,11 @@ class Sudoku extends Component {
 
 
 Sudoku.propTypes = {
-  sudoku: PropTypes.object,
-  resetCurrentSudoku: PropTypes.func
+  sudoku: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps, { resetCurrentSudoku })(Sudoku);
+export default connect(mapStateToProps)(Sudoku);

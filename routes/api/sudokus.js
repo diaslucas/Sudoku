@@ -55,6 +55,8 @@ router.put('/:id', (req, res) => {
       }
     })
     .catch(err => res.status(404).json({success: false, error: err.message}));
+  } else {
+    res.json({ success: false, message: 'No user logged in' });
   }
 });
 

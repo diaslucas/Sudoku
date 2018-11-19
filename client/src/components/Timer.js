@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import formatTime from '../helpers/formatTime';
 
 class Timer extends Component {
 
@@ -22,11 +23,7 @@ class Timer extends Component {
       <React.Fragment>
         <div className={!timerVisible ? 'HideTimer' : ''}>
           <h4>
-            {hours > 0 && (
-              <span>{hours}:</span>
-            )}
-            {(mins.toString().length > 1 ? <span>{mins}:</span> : <span>0{mins}:</span>)}
-            {(secs.toString().length > 1 ? <span>{secs}</span> : <span>0{secs}</span>)}
+            {formatTime(hours, mins, secs)}
           </h4>
           <div>
             Too much pressure ? <br />
