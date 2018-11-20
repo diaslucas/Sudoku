@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 import BoardRow from './BoardRow';
 import Timer from './Timer';
 import { connect } from 'react-redux';
+import { resetErrors } from '../actions/SudokuActions';
 import PropTypes from 'prop-types';
 import Level from './Level';
 import WinnersModal from './WinnersModal';
@@ -27,6 +28,7 @@ class Sudoku extends Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    this.props.resetErrors();
   }
 
   tick() {
@@ -115,11 +117,12 @@ class Sudoku extends Component {
 
 
 Sudoku.propTypes = {
-  sudoku: PropTypes.object
+  sudoku: PropTypes.object,
+  resetErrors: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps)(Sudoku);
+export default connect(mapStateToProps, {resetErrors})(Sudoku);

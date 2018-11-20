@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem, Badge } from 'reactstrap';
 import formatTime from '../helpers/formatTime';
 
 const Records = props => {
-  if(!props.value){
+  if(props.value.length === 0){
     return false
   }
   return (

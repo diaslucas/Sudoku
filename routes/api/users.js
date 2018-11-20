@@ -131,7 +131,6 @@ router.post('/logout', (req, res) => {
   }
 });
 
-
 // @route DELETE api/users
 // @desc DELETE a user
 router.delete('/:id', (req, res) => {

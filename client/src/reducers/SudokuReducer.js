@@ -1,5 +1,5 @@
 import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD,
-ADD_ERROR } from '../actions/types';
+ADD_ERROR, RESET_ERRORS } from '../actions/types';
 
 const initialState = {
   boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -45,6 +45,11 @@ export default function (state = initialState, action) {
     case ADD_ERROR:
       return {
         ...state, errors: state.errors + 1
+      }
+
+    case RESET_ERRORS:
+      return {
+        ...state, errors: 0
       }
 
     default:

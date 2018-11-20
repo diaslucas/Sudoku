@@ -35,17 +35,18 @@ router.post('/', (req, res) => {
   
 });
 
-
-
 // @route PUT api/sudokus
 // @desc UPDATE a sudoku
 router.put('/:id', (req, res) => {
+  console.log(req.isAuthenticated());
   if(req.isAuthenticated()){
     Sudoku.findById(req.params.id)
     .then((sudokuToBeUpdated) => {
       const {hours, mins, secs, errors} = req.body;
       if (hours !== null && mins !== null && secs !== null && errors !== null) {
-        const newRecord = {username: req.user.username, hours: hours, mins: mins, secs: secs, errors: errors};
+        const initialScore = 10000;
+        let score = initialScore - (((hours * 60 * 60) + (mins * 60) + secs) + (errors * 20));
+        const newRecord = {username: req.user.username, hours, mins, secs, errors, score};
         let recs = sudokuToBeUpdated.records;
         recs.push(newRecord);
         sudokuToBeUpdated.set({records: recs});
@@ -64,9 +65,13 @@ router.put('/:id', (req, res) => {
 // @route DELETE api/sudokus
 // @desc DELETE a sudoku
 router.delete('/:id', (req, res) => {
-  Sudoku.findById(req.params.id)
-  .then(sudoku => sudoku.remove().then(() => res.json({success: true})))
-  .catch(err => res.status(404).json({success: false}));
+  if(req.isAuthenticated()){
+    if(req.user.role === 'admin'){
+      Sudoku.findById(req.params.id)
+      .then(sudoku => sudoku.remove().then(() => res.json({success: true})))
+      .catch(err => res.status(404).json({success: false}));
+    }
+  }
 });
 
 module.exports = router;
