@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { getSudokus, setCurrentSudoku } from '../actions/SudokuActions';
 import Level from './Level';
 
-
 class Home extends Component {
 
   componentDidMount() {
@@ -14,7 +13,6 @@ class Home extends Component {
   }
 
   goToSudoku = (board) => {
-    //console.log(board);
     this.props.setCurrentSudoku(board);
     this.props.history.push('/sudoku');
   }

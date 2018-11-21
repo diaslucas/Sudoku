@@ -83,7 +83,7 @@ class Sudoku extends Component {
         <Container>
           <Row>
             <Col md="3">
-              <Records value={records}/>
+              <Records list={records}/>
             </Col>
             <Col md="6">
               {isSudokuComplete &&

@@ -27,7 +27,7 @@ class Field extends Component {
           this.focusNextField(currentTd);
         } else {
           this.props.addError();
-          this.setState({ cssClass: 'border border-danger' });
+          this.setState({ cssClass: 'text-danger' });
         }
       } else{
         this.setState({ cssClass: '' });
@@ -61,10 +61,6 @@ class Field extends Component {
 
   render() {
     const { value, cssClass } = this.state;
-    // let cssClass = '';
-    // if (value !== '' && parseInt(value) !== this.props.correctValue) {
-    //   cssClass = 'border border-danger';
-    // }
     return (
       <input type="text" value={value} className={"sudoku-input " + cssClass}
         maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
