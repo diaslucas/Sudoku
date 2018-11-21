@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getSudokus, setCurrentSudoku } from '../actions/SudokuActions';
 import Level from './Level';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Home extends Component {
 
@@ -17,6 +18,20 @@ class Home extends Component {
     this.props.history.push('/sudoku');
   }
 
+  userDidSudoku = (records) => {
+    let result = false;
+    if(this.props.user.userLoggedIn !== null) {
+      if(records.length > 0) {
+        records.forEach((record) => {
+          if(record.username === this.props.user.userLoggedIn.username){
+            result =  true;
+          }
+        });
+      }
+    }
+    return result;
+  }
+
   render() {
     const { boardRows, boards } = this.props.sudoku;
     const cols = boards.map((board) => {
@@ -24,6 +39,10 @@ class Home extends Component {
         <Col key={board._id} md="4">
           <div style={{ width: '274px' }}>
             <div onClick={() => this.goToSudoku(board)}>
+              {
+                this.userDidSudoku(board.records) &&
+               <div className="sudoku-done text-success"><FontAwesomeIcon icon="check-circle" size="2x" color="success"/></div>
+               }
               <table className="sudoku-board view-mode-board">
                 <tbody>
                   {boardRows.map(boardRow => (
@@ -52,11 +71,13 @@ class Home extends Component {
 Home.propTypes = {
   getSudokus: PropTypes.func,
   setCurrentSudoku: PropTypes.func,
-  sudoku: PropTypes.object
+  sudoku: PropTypes.object,
+  user: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { getSudokus, setCurrentSudoku })(Home);
