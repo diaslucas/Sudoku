@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setBoardState, addError } from '../actions/SudokuActions';
+import { setInitialBoardState, setFinalBoardState } from '../actions/ManageSudokuActions';
 
 class Field extends Component {
 
@@ -21,20 +22,42 @@ class Field extends Component {
   handleChange(event) {
     const value = event.target.value;
     if (!isNaN(value)) {
-      if (value !== '') {
-        if (parseInt(value) === this.props.correctValue) {
-          const currentTd = this.fieldRef.current.parentElement;
-          this.focusNextField(currentTd);
-        } else {
-          this.props.addError();
-          this.setState({ cssClass: 'text-danger' });
-        }
-      } else{
-        this.setState({ cssClass: '' });
-      }
       this.setState({ value });
-      this.props.setBoardState(this.props.fieldIndex, parseInt(value));
+
+      if (this.props.type === 'manage') {
+        this.handleChangeManageSudoku(value);
+      } else {
+        this.handleChangeGameMode(value);
+      }
+
     }
+  }
+
+  // Change initial / final board State 
+  handleChangeManageSudoku(value) {
+    const { initialOrFinalBoard } = this.props;
+    if(initialOrFinalBoard === 'initial'){
+      this.props.setInitialBoardState(this.props.fieldIndex, parseInt(value));
+    } else if(initialOrFinalBoard === 'final'){
+      this.props.setFinalBoardState(this.props.fieldIndex, parseInt(value));
+    }
+    this.focusNextField(this.fieldRef.current.parentElement);
+  }
+
+  // Change board State of current sudoku being played
+  handleChangeGameMode(value) {
+    if (value !== '') {
+      if (parseInt(value) === this.props.correctValue) {
+        const currentTd = this.fieldRef.current.parentElement;
+        this.focusNextField(currentTd);
+      } else {
+        this.props.addError();
+        this.setState({ cssClass: 'text-danger' });
+      }
+    } else {
+      this.setState({ cssClass: '' });
+    }
+    this.props.setBoardState(this.props.fieldIndex, parseInt(value));
   }
 
   focusNextField(currentTd) {
@@ -61,6 +84,9 @@ class Field extends Component {
 
   render() {
     const { value, cssClass } = this.state;
+    if(this.props.type === 'manage'){
+      return <input type="text" value={value} className="sudoku-input" maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
+    }
     return (
       <input type="text" value={value} className={"sudoku-input " + cssClass}
         maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
@@ -72,11 +98,13 @@ class Field extends Component {
 Field.propTypes = {
   sudoku: PropTypes.object,
   setBoardState: PropTypes.func,
-  addError: PropTypes.func
+  addError: PropTypes.func,
+  setInitialBoardState: PropTypes.func,
+  setFinalBoardState: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   sudoku: state.sudoku
 });
 
-export default connect(mapStateToProps, { setBoardState, addError })(Field);
+export default connect(mapStateToProps, { setBoardState, addError, setInitialBoardState, setFinalBoardState })(Field);

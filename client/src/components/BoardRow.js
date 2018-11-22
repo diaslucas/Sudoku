@@ -21,14 +21,18 @@ export default class BoardRow extends Component {
     return (
       <tr key={`row_${row}`}>
       {newFields.map((field, index) => {
-        if(boardResults){
-          if(field !== 0){
-            return <td key={`startField_${index}`}><div className="sudoku-input default-value">{field}</div></td>
-          } else {
-              return <td key={`field_${index}`}><Field correctValue={boardResults[index]} fieldIndex={index} /></td>
-          }
+        if (this.props.type === 'manage') {
+          return <td key={`field_${index}`}><Field type="manage" fieldIndex={index} initialOrFinalBoard={this.props.initialOrFinalBoard}/></td>
         } else {
-          return <td key={`startField_${index}`}>{(field === 0 ? '' : field)}</td>
+          if(boardResults){
+            if(field !== 0){
+              return <td key={`startField_${index}`}><div className="sudoku-input default-value">{field}</div></td>
+            } else {
+                return <td key={`field_${index}`}><Field correctValue={boardResults[index]} fieldIndex={index} /></td>
+            }
+          } else {
+            return <td key={`startField_${index}`}>{(field === 0 ? '' : field)}</td>
+          }
         }
       })}
     </tr>

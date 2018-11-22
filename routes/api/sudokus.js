@@ -23,22 +23,28 @@ router.get('/:id', (req, res) => {
 // @route POST api/sudokus
 // @desc Add a sudoku
 router.post('/', (req, res) => {
-  const newSudoku = new Sudoku({
-    initialBoard: req.body.initialBoard,
-    finalBoard: req.body.finalBoard,
-    level: req.body.level
-  });
+  if (req.isAuthenticated()) {
+    if (req.user.role === 'admin') {
+      const newSudoku = new Sudoku({
+        initialBoard: req.body.initialBoard,
+        finalBoard: req.body.finalBoard,
+        level: req.body.level
+      });
 
-  newSudoku
-  .save()
-  .then(sudoku => res.json(sudoku));
-  
+      newSudoku
+        .save()
+        .then(sudoku => res.json({ success: true, sudoku }));
+    } else {
+      res.json({ success: false, message: 'The user does not have permision to add' });
+    }
+  } else {
+    res.json({ success: false, message: 'No user logged in' });
+  }
 });
 
 // @route PUT api/sudokus
 // @desc UPDATE a sudoku
 router.put('/:id', (req, res) => {
-  console.log(req.isAuthenticated());
   if(req.isAuthenticated()){
     Sudoku.findById(req.params.id)
     .then((sudokuToBeUpdated) => {
@@ -70,7 +76,11 @@ router.delete('/:id', (req, res) => {
       Sudoku.findById(req.params.id)
       .then(sudoku => sudoku.remove().then(() => res.json({success: true})))
       .catch(err => res.status(404).json({success: false}));
+    } else {
+      res.json({ success: false, message: 'The user does not have permision to delete' });
     }
+  } else {
+    res.json({ success: false, message: 'No user logged in' });
   }
 });
 

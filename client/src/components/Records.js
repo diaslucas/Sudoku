@@ -17,6 +17,14 @@ const Records = props => {
   // Reversing list to sort by score desc
   recordsList.reverse();
 
+  // Getting top 3 records
+  recordsList = recordsList.filter((record, i) => {
+    if(i < 3){
+      return record;
+    } 
+    return false;
+  });
+
   return (
     <React.Fragment>
     <h5>Records</h5>

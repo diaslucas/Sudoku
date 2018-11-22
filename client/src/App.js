@@ -8,10 +8,10 @@ import Sudoku from './components/Sudoku';
 import CreateAccount from './components/CreateAccount';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
 import { Provider } from 'react-redux';
 import store from './store';
 import Login from './components/Login';
+import AddSudoku from './components/AddSudoku';
 
 library.add(faStar, faCheckCircle);
 
@@ -26,6 +26,7 @@ class App extends Component {
             <Route path="/Sudoku" component={Sudoku} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/Login" component={Login} />
+            <Route path="/AddSudoku" component={AddSudoku} />
           </React.Fragment>
         </Router>
       </Provider>
