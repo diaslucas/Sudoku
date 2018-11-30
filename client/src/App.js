@@ -11,7 +11,7 @@ import { faStar, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Provider } from 'react-redux';
 import store from './store';
 import Login from './components/Login';
-import AddSudoku from './components/AddSudoku';
+import ManageSudoku from './components/ManageSudoku';
 
 library.add(faStar, faCheckCircle);
 
@@ -26,7 +26,8 @@ class App extends Component {
             <Route path="/Sudoku" component={Sudoku} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/Login" component={Login} />
-            <Route path="/AddSudoku" component={AddSudoku} />
+            <Route path="/AddSudoku" component={ManageSudoku} />
+            <Route path="/EditSudoku/:sudokuID" component={ManageSudoku} />
           </React.Fragment>
         </Router>
       </Provider>

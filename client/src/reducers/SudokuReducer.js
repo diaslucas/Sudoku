@@ -1,5 +1,5 @@
 import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD,
-ADD_ERROR, RESET_ERRORS } from '../actions/types';
+ADD_ERROR, RESET_ERRORS, DELETE_SUDOKU } from '../actions/types';
 
 const initialState = {
   boardRows: [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -51,6 +51,12 @@ export default function (state = initialState, action) {
       return {
         ...state, errors: 0
       }
+
+      case DELETE_SUDOKU:
+      return {
+        ...state,
+        boards: state.boards.filter(sudoku => sudoku._id !== action.payload)
+      };
 
     default:
       return state;

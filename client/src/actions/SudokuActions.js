@@ -1,5 +1,5 @@
 import { GET_SUDOKUS, SET_CURRENT_SUDOKU, SET_BOARD_STATE, RESET_CURRENT_SUDOKU, SET_BOARD_STATE_TO_INITIAL_BOARD,
-  ADD_ERROR, RESET_ERRORS} from './types';
+  ADD_ERROR, RESET_ERRORS , DELETE_SUDOKU } from './types';
 import axios from 'axios';
 
 export const getSudokus = () => dispatch => {
@@ -9,6 +9,17 @@ export const getSudokus = () => dispatch => {
     dispatch({
       type: GET_SUDOKUS,
       payload: res.data
+    });
+  })
+}
+
+export const deleteSudoku = (sudokuID) => dispatch => {
+  axios
+  .delete(`/api/sudokus/${sudokuID}`)
+  .then(res => {
+    dispatch({
+      type: DELETE_SUDOKU,
+      payload: sudokuID
     });
   })
 }

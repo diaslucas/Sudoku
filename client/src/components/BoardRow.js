@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Field from './Field';
 
 export default class BoardRow extends Component {
- 
+  
   render() {
     let fields = this.props.fields;
     let row = this.props.row;
@@ -21,9 +21,13 @@ export default class BoardRow extends Component {
     return (
       <tr key={`row_${row}`}>
       {newFields.map((field, index) => {
-        if (this.props.type === 'manage') {
-          return <td key={`field_${index}`}><Field type="manage" fieldIndex={index} initialOrFinalBoard={this.props.initialOrFinalBoard}/></td>
-        } else {
+        if (this.props.type === 'add') {
+          return <td key={`field_${index}`}><Field type="add" fieldIndex={index} initialOrFinalBoard={this.props.initialOrFinalBoard}/></td>
+        }
+        else if(this.props.type === 'edit'){
+          return <td key={`field_${index}`}><Field type="edit" fieldIndex={index} fieldValue={this.props.fields[index]} initialOrFinalBoard={this.props.initialOrFinalBoard}/></td>
+        }
+         else {
           if(boardResults){
             if(field !== 0){
               return <td key={`startField_${index}`}><div className="sudoku-input default-value">{field}</div></td>

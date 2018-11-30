@@ -3,10 +3,11 @@ import BoardRow from './BoardRow';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getSudokus, setCurrentSudoku } from '../actions/SudokuActions';
+import { getSudokus, setCurrentSudoku, deleteSudoku } from '../actions/SudokuActions';
 import Level from './Level';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Home extends Component {
 
@@ -33,16 +34,22 @@ class Home extends Component {
     return result;
   }
 
+  deleteSudoku(sudokuID) {
+    if(window.confirm("Do you really want to delete this sudoku?")){
+      this.props.deleteSudoku(sudokuID);
+    }
+  }
+
   AdminLinks = (props) => {
     if (this.props.user.userLoggedIn !== null) {
       if (this.props.user.userLoggedIn.role === 'admin') {
-        return (
+        return ( 
           <ul className="nav" style={{marginLeft: '60px'}}>
             <li className="nav-item">
-              <Link className="nav-link" to={`/UpdateSudoku/${props.sudokuID}`}>Update</Link>
+              <Link className="nav-link" to={`/EditSudoku/${props.sudokuID}`}>Update</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-danger" href="javascript:void(0)">Delete</a>
+              <a className="nav-link text-danger" href="javascript:void(0)" onClick={() => {this.deleteSudoku(props.sudokuID)}}>Delete</a>
             </li>
           </ul>
         )
@@ -50,6 +57,8 @@ class Home extends Component {
     }
     return false;
   }
+
+
 
   render() {
     const { boardRows, boards } = this.props.sudoku;
@@ -91,6 +100,7 @@ class Home extends Component {
 Home.propTypes = {
   getSudokus: PropTypes.func,
   setCurrentSudoku: PropTypes.func,
+  deleteSudoku: PropTypes.func,
   sudoku: PropTypes.object,
   user: PropTypes.object
 }
@@ -100,4 +110,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getSudokus, setCurrentSudoku })(Home);
+export default connect(mapStateToProps, { getSudokus, setCurrentSudoku, deleteSudoku })(Home);

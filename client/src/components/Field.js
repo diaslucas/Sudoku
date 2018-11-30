@@ -23,9 +23,8 @@ class Field extends Component {
     const value = event.target.value;
     if (!isNaN(value)) {
       this.setState({ value });
-
-      if (this.props.type === 'manage') {
-        this.handleChangeManageSudoku(value);
+      if (this.props.type === 'add' || this.props.type === 'edit') {
+        this.handleChangeManageSudokuMode(value);
       } else {
         this.handleChangeGameMode(value);
       }
@@ -34,14 +33,16 @@ class Field extends Component {
   }
 
   // Change initial / final board State 
-  handleChangeManageSudoku(value) {
+  handleChangeManageSudokuMode(value) {
     const { initialOrFinalBoard } = this.props;
     if(initialOrFinalBoard === 'initial'){
       this.props.setInitialBoardState(this.props.fieldIndex, parseInt(value));
     } else if(initialOrFinalBoard === 'final'){
       this.props.setFinalBoardState(this.props.fieldIndex, parseInt(value));
     }
-    this.focusNextField(this.fieldRef.current.parentElement);
+    if(value !== ''){
+      this.focusNextField(this.fieldRef.current.parentElement);
+    }
   }
 
   // Change board State of current sudoku being played
@@ -81,10 +82,20 @@ class Field extends Component {
       }
     }
   }
+  
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.fieldValue !== undefined){
+      let value = '';
+      if(nextProps.fieldValue > 0){
+        value = nextProps.fieldValue;
+      }
+      this.setState({ value });
+    }
+  } 
 
   render() {
     const { value, cssClass } = this.state;
-    if(this.props.type === 'manage'){
+    if(this.props.type === 'add' || this.props.type === 'edit'){
       return <input type="text" value={value} className="sudoku-input" maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     }
     return (

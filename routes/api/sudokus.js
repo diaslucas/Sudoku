@@ -71,6 +71,7 @@ router.put('/:id', (req, res) => {
 // @route DELETE api/sudokus
 // @desc DELETE a sudoku
 router.delete('/:id', (req, res) => {
+  console.log(req.params.id);
   if(req.isAuthenticated()){
     if(req.user.role === 'admin'){
       Sudoku.findById(req.params.id)
