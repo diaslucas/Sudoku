@@ -7,7 +7,7 @@ const Sudoku = require('../../models/Sudoku');
 // @route GET api/sudokus
 // @desc Get all sudokus
 router.get('/', (req, res) => {
-  Sudoku.find()
+  Sudoku.find().sort({level: 'asc'})
   .then(sudokus => {
     res.json(sudokus)
   })
@@ -43,8 +43,8 @@ router.post('/', (req, res) => {
 });
 
 // @route PUT api/sudokus
-// @desc UPDATE a sudoku
-router.put('/:id', (req, res) => {
+// @desc Adds a record to a sudoku
+router.put('AddRecord/:id', (req, res) => {
   if(req.isAuthenticated()){
     Sudoku.findById(req.params.id)
     .then((sudokuToBeUpdated) => {
@@ -67,6 +67,25 @@ router.put('/:id', (req, res) => {
   }
 });
 
+// @route PUT api/sudokus
+// @desc UPDATE a sudoku
+router.put('/:id', (req, res) => {
+  if(req.isAuthenticated()){
+    Sudoku.findById(req.params.id)
+    .then((sudokuToBeUpdated) => {
+      const {initialBoard, finalBoard, level} = req.body;
+      if (initialBoard !== null && finalBoard !== null && level !== null) {
+        sudokuToBeUpdated.set({initialBoard, finalBoard, level});
+        sudokuToBeUpdated.save()
+        .then(updatedSudoku => res.send({success: true, updatedSudoku}))
+        .catch(err => res.status(500).json({success: false, error: err.message}))
+      }
+    })
+    .catch(err => res.status(404).json({success: false, error: err.message}));
+  } else {
+    res.json({ success: false, message: 'No user logged in' });
+  }
+});
 
 // @route DELETE api/sudokus
 // @desc DELETE a sudoku

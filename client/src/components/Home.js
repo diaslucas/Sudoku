@@ -7,7 +7,6 @@ import { getSudokus, setCurrentSudoku, deleteSudoku } from '../actions/SudokuAct
 import Level from './Level';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 class Home extends Component {
 
@@ -44,12 +43,12 @@ class Home extends Component {
     if (this.props.user.userLoggedIn !== null) {
       if (this.props.user.userLoggedIn.role === 'admin') {
         return ( 
-          <ul className="nav" style={{marginLeft: '60px'}}>
+          <ul className="nav mb-1 mt-3" style={{marginLeft: '60px'}}>
             <li className="nav-item">
-              <Link className="nav-link" to={`/EditSudoku/${props.sudokuID}`}>Update</Link>
+              <Link className="btn btn-outline-primary mr-2" to={`/EditSudoku/${props.sudokuID}`}>Update</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-danger" href="javascript:void(0)" onClick={() => {this.deleteSudoku(props.sudokuID)}}>Delete</a>
+              <button className="btn btn-outline-danger ml-2" onClick={() => {this.deleteSudoku(props.sudokuID)}}>Delete</button>
             </li>
           </ul>
         )
@@ -65,7 +64,7 @@ class Home extends Component {
     const cols = boards.map((board) => {
       return (
         <Col key={board._id} md="4">
-          <div style={{ width: '274px' }}>
+          <div className="mb-4" style={{ width: '274px' }}>
               {
                 this.userDidSudoku(board.records) &&
                <div className="sudoku-done text-success"><FontAwesomeIcon icon="check-circle" size="2x" color="success"/></div>

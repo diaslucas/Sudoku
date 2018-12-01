@@ -15,7 +15,8 @@ class ManageSudoku extends Component {
     this.state = {
        level: '',
        redirectToHome: false,
-       addMode: true
+       addMode: true,
+       sudokuID: null
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,19 +30,32 @@ class ManageSudoku extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const { addMode, level, sudokuID } = this.state;
     const { initialBoard, finalBoard } = this.props.manageSudoku;
-    console.log(initialBoard, finalBoard);
-    // const newSudoku = { initialBoard, finalBoard, level: parseInt(this.state.level) };
-    // axios
-    // .post('/api/sudokus/', newSudoku)
-    // .then(res => {
-    //   if(res.data.success){
-    //     this.setState({ redirectToHome: true });
-    //   } else {
-    //     alert(res.data.message);
-    //   }
-    // })
-    // .catch(err => alert(err.message));
+    const sudoku = { initialBoard, finalBoard, level: parseInt(level) };
+    if(addMode){
+      axios
+      .post('/api/sudokus/', sudoku)
+      .then(res => {
+        if(res.data.success){
+          this.setState({ redirectToHome: true });
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch(err => alert(err.message));
+    } else {
+      axios
+      .put(`/api/sudokus/${sudokuID}`, sudoku)
+      .then(res => {
+        if(res.data.success){
+          this.setState({ redirectToHome: true });
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch(err => alert(err.message));
+    }
   }
 
   componentDidMount() {
@@ -49,7 +63,7 @@ class ManageSudoku extends Component {
     const { sudokuID } = this.props.match.params;
     if(sudokuID){
       this.props.setManageSudoku(sudokuID);
-      this.setState({ addMode: false });
+      this.setState({ addMode: false, sudokuID });
     }
   }
 
@@ -71,11 +85,11 @@ class ManageSudoku extends Component {
     const { addMode, level } = this.state;
     const { boardRows } = this.props.sudoku;
     const { initialBoard, finalBoard } = this.props.manageSudoku;
-    var type;
-    if(addMode){ //AddMode
-      type = 'add';
-    } else {  //EditMode
+    let type = 'add';
+    let submitBtnText = 'Add Sudoku'; 
+    if(!addMode){ 
       type = 'edit';
+      submitBtnText = 'Update Sudoku';
     }
     if(this.state.redirectToHome){
       return <Redirect to='/' /> 
@@ -118,9 +132,9 @@ class ManageSudoku extends Component {
               </FormGroup>
             </Col>
           </Row>
-          <Button color="success" className="mr-2">Add Sudoku</Button>
-          <Button color="primary" className="mr-2" onClick={this.clearForm}>Clear</Button>
-          <Button color="danger" className="mr-2" onClick={this.cancel}>Cancel</Button>
+          <Button color="success" className="mr-2 mb-4">{submitBtnText}</Button>
+          <Button color="primary" className="mr-2 mb-4" onClick={this.clearForm}>Clear</Button>
+          <Button color="danger" className="mr-2 mb-4" onClick={this.cancel}>Cancel</Button>
         </Form>
       </Container>
     )

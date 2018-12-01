@@ -34,13 +34,16 @@ class Field extends Component {
 
   // Change initial / final board State 
   handleChangeManageSudokuMode(value) {
+    if(!value){
+      value = 0
+    }
     const { initialOrFinalBoard } = this.props;
     if(initialOrFinalBoard === 'initial'){
       this.props.setInitialBoardState(this.props.fieldIndex, parseInt(value));
     } else if(initialOrFinalBoard === 'final'){
       this.props.setFinalBoardState(this.props.fieldIndex, parseInt(value));
     }
-    if(value !== ''){
+    if(value > 0){
       this.focusNextField(this.fieldRef.current.parentElement);
     }
   }
