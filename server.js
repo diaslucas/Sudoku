@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const sudokus = require('./routes/api/sudokus');
 const users = require('./routes/api/users');
@@ -49,6 +50,16 @@ app.use(passport.session());
 // Use Routes
 app.use('/api/sudokus', sudokus);
 app.use('/api/users', users);
+
+// Serve static assets if in prod
+if(process.env.NODE_ENV === 'production'){
+  // Set static folder
+  app.use(express.static('client/build'));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // PORT
 const port = process.env.PORT || 5000;
