@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
 
 // @route PUT api/sudokus
 // @desc Adds a record to a sudoku
-router.put('AddRecord/:id', (req, res) => {
+router.put('/AddRecord/:id', (req, res) => {
   if(req.isAuthenticated()){
     Sudoku.findById(req.params.id)
     .then((sudokuToBeUpdated) => {
