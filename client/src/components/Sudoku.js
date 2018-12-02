@@ -62,7 +62,7 @@ class Sudoku extends Component {
 
   addRecord = (sudokuRecord) => {
     axios
-      .put(`/api/sudokus/${sudokuRecord._id}`, sudokuRecord.record);
+      .put(`/api/sudokus/AddRecord/${sudokuRecord._id}`, sudokuRecord.record);
   }
 
   render() {

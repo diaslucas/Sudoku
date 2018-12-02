@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BoardRow from './BoardRow';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getSudokus, setCurrentSudoku, deleteSudoku } from '../actions/SudokuActions';
@@ -87,6 +87,11 @@ class Home extends Component {
     return (
       <div>
         <Container>
+          {this.props.user.userLoggedIn === null &&
+            <Alert color="dark">
+              <Link to={'/CreateAccount'} className="alert-link">Create an account</Link> to store your records.
+            </Alert>
+          }
           <Row>
             {cols}
           </Row>
