@@ -89,7 +89,7 @@ class Sudoku extends Component {
               {isSudokuComplete &&
                 <WinnersModal time={time} errors={errors} />
               }
-              <div style={{ width: '486px', margin: '0 auto' }}>
+              <div style={{margin: '0 auto', display: 'table' }}>
                 <table className="sudoku-board">
                   <tbody>
                     {boardRows.map(boardRow => (
