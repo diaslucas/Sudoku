@@ -56,7 +56,7 @@ class Login extends Component {
         <Row>
           <Col md="4"></Col>
           <Col md="4">
-            <h1>Login</h1>
+            <h1>Log In</h1>
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label>Username</Label>
@@ -66,7 +66,7 @@ class Login extends Component {
                 <Label>Password</Label>
                 <Input type="password" name="password" onChange={this.handleChange} />
               </FormGroup>
-              <Button color="success">Create Account</Button>
+              <Button color="success">Log In</Button>
             </Form>
           </Col>
           <Col md="4"></Col>
