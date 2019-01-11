@@ -102,7 +102,7 @@ class Field extends Component {
       return <input type="text" value={value} className="sudoku-input" maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     }
     return (
-      <input type="text" value={value} className={"sudoku-input " + cssClass}
+      <input type="text" pattern="\d*" value={value} className={"sudoku-input " + cssClass}
         maxLength="1" onChange={this.handleChange} ref={this.fieldRef} />
     )
   }
