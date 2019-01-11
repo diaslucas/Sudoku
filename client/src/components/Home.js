@@ -64,7 +64,7 @@ class Home extends Component {
     const cols = boards.map((board) => {
       return (
         <Col key={board._id} md="4">
-          <div className="mb-4" style={{ width: '274px' }}>
+          <div className="mb-4" style={{ width: '274px', margin: '0 auto' }}>
               {
                 this.userDidSudoku(board.records) &&
                <div className="sudoku-done text-success"><FontAwesomeIcon icon="check-circle" size="2x" color="success"/></div>

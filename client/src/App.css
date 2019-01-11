@@ -67,3 +67,24 @@
   left: 20px;
   z-index: 999;
 }
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+
+  .play-mode-board td {
+    height: 15px;
+    width: 15px;
+    border: 1px solid;
+    text-align: center;
+  }
+
+  .play-mode-board .sudoku-input  {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+  }
+
+ }

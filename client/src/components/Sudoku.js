@@ -90,7 +90,7 @@ class Sudoku extends Component {
                 <WinnersModal time={time} errors={errors} />
               }
               <div style={{margin: '0 auto', display: 'table' }}>
-                <table className="sudoku-board">
+                <table className="sudoku-board play-mode-board">
                   <tbody>
                     {boardRows.map(boardRow => (
                       <BoardRow key={`boardRow_${boardRow}`} row={boardRow} fields={initialBoard} boardResults={finalBoard} />
