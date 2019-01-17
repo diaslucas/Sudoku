@@ -13,6 +13,7 @@
 
 .default-value {
   border: 1px solid #a9a9a9;
+  color: #17a2b8;
 }
 
 .sudoku-board td {

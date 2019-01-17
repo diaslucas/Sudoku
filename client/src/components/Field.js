@@ -66,8 +66,11 @@ class Field extends Component {
 
   focusNextField(currentTd) {
     let nextTd = currentTd.nextSibling;
-    if(nextTd !== null){
-      if(nextTd.firstChild.tagName === 'INPUT'){
+    if(nextTd !== null) {
+      let inputIsEmpty = nextTd.firstChild.value === '';
+      let inputIsNotWithWrongValue = nextTd.firstChild.className.indexOf('text-danger') > -1;
+      
+      if(nextTd.firstChild.tagName === 'INPUT' && (inputIsEmpty || inputIsNotWithWrongValue)){
         nextTd.firstChild.focus();
       } else {
         this.focusNextField(nextTd);
@@ -75,9 +78,11 @@ class Field extends Component {
     } else {
       let currentTr = currentTd.parentElement;
       if (currentTr.nextSibling !== null) {
-        
         let input = currentTr.nextSibling.firstChild.firstChild;
-        if (input.tagName === 'INPUT') {
+
+        let inputIsEmpty = input.value === '';
+        let inputIsNotWithWrongValue = input.className.indexOf('text-danger') > -1;
+        if (input.tagName === 'INPUT' && (inputIsEmpty || inputIsNotWithWrongValue)) {
           currentTr.nextSibling.firstChild.firstChild.focus();
         } else {
           this.focusNextField(currentTr.nextSibling.firstChild);
