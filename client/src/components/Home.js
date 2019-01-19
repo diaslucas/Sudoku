@@ -89,7 +89,7 @@ class Home extends Component {
         <Container>
           {this.props.user.userLoggedIn === null &&
             <Alert color="dark">
-              <Link to={'/CreateAccount'} className="alert-link">Create an account</Link> to store your records.
+              <Link to={'/CreateAccount'} className="alert-link">Create an account</Link> to store your scores.
             </Alert>
           }
           <Row>
