@@ -73,6 +73,10 @@
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
 
+  .play-mode-board {
+    margin-top: 25px;
+  }
+
   .play-mode-board td {
     height: 15px;
     width: 15px;
