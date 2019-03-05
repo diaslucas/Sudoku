@@ -23,16 +23,16 @@
   text-align: center;
 }
 .sudoku-board td:first-child {
-  border-left: 4px solid;
+  border-left: 3px solid;
 }
 .sudoku-board td:nth-child(3n) {
-  border-right: 4px solid;
+  border-right: 3px solid;
 }
 .sudoku-board tr:first-child {
-  border-top: 4px solid;
+  border-top: 3px solid;
 }
 .sudoku-board tr:nth-child(3n) td {
-  border-bottom: 4px solid;
+  border-bottom: 3px solid;
 }
 .HideTimer {
   opacity: 0;
