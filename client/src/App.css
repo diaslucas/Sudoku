@@ -17,22 +17,22 @@
 }
 
 .sudoku-board td {
-  height:30px;
-  width:30px;
-  border:1px solid;
-  text-align:center;
+  height: 30px;
+  width: 30px;
+  border: 1px solid;
+  text-align: center;
 }
 .sudoku-board td:first-child {
-  border-left:solid;
+  border-left: 4px solid;
 }
 .sudoku-board td:nth-child(3n) {
-  border-right:solid ;
+  border-right: 4px solid;
 }
 .sudoku-board tr:first-child {
-  border-top:solid;
+  border-top: 4px solid;
 }
 .sudoku-board tr:nth-child(3n) td {
-  border-bottom:solid ;
+  border-bottom: 4px solid;
 }
 .HideTimer {
   opacity: 0;
